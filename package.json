@@ -2,10 +2,11 @@
   "name": "react-router-context",
   "version": "1.0.1",
   "description": "A React router wrapper based on React Context API",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "files": [
     "./dist"
   ],
+  "types": "./dist/index.d.ts",
   "author": "Thiel",
   "license": "MIT",
   "scripts": {
