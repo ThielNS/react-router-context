@@ -1,7 +1,7 @@
 {
   "name": "react-router-context",
   "version": "1.0.0",
-  "description": "A React router wrapper basead on React Context API",
+  "description": "A React router wrapper based on React Context API",
   "main": "dist/index.js",
   "files": [
     "./dist"
