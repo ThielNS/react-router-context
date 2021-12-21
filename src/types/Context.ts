@@ -10,4 +10,5 @@ export interface RoutingProviderProps {
 export interface RoutingContextProps {
   role?: string;
   setRole: (role: string) => void;
+  routes: RouteProps[];
 }

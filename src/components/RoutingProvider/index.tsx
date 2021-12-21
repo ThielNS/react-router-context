@@ -80,7 +80,9 @@ function RoutingProvider({
   }
 
   return (
-    <RoutingContext.Provider value={{ role, setRole: handleSetRole }}>
+    <RoutingContext.Provider
+      value={{ role, setRole: handleSetRole, routes: defaultRoutes }}
+    >
       <BrowserRouter {...browserRouterConfig}>
         <Routes>{renderRoutes(defaultRoutes)}</Routes>
       </BrowserRouter>
@@ -91,6 +93,10 @@ function RoutingProvider({
 export function useRouteRole(): [string | undefined, (role: string) => void] {
   const { role, setRole } = useContext(RoutingContext);
   return [role, setRole];
+}
+
+export function useRoutes() {
+  return useContext(RoutingContext).routes;
 }
 
 export default RoutingProvider;

@@ -1,5 +1,5 @@
-import { useRouteRole } from './components/RoutingProvider';
+import { useRouteRole, useRoutes } from './components/RoutingProvider';
 
-export { useRouteRole };
+export { useRouteRole, useRoutes };
 
 export { default as ReactRouterContext } from './components/RoutingProvider';

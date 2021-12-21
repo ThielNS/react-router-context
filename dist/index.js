@@ -118,7 +118,8 @@ function RoutingProvider(_a) {
   return /*#__PURE__*/React__default["default"].createElement(RoutingContext.Provider, {
     value: {
       role: role,
-      setRole: handleSetRole
+      setRole: handleSetRole,
+      routes: defaultRoutes
     }
   }, /*#__PURE__*/React__default["default"].createElement(reactRouterDom.BrowserRouter, __assign({}, browserRouterConfig), /*#__PURE__*/React__default["default"].createElement(reactRouterDom.Routes, null, renderRoutes(defaultRoutes))));
 }
@@ -130,7 +131,11 @@ function useRouteRole() {
 
   return [role, setRole];
 }
+function useRoutes() {
+  return React.useContext(RoutingContext).routes;
+}
 
 exports.ReactRouterContext = RoutingProvider;
 exports.useRouteRole = useRouteRole;
+exports.useRoutes = useRoutes;
 //# sourceMappingURL=index.js.map
