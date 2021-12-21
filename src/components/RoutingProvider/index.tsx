@@ -95,7 +95,7 @@ export function useRouteRole(): [string | undefined, (role: string) => void] {
   return [role, setRole];
 }
 
-export function useRoutes() {
+export function useRoutes<P = any>(): RouteProps<P>[] {
   return useContext(RoutingContext).routes;
 }
 
