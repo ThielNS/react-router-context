@@ -41,3 +41,17 @@ export default App;
 ```
 
 For more information about routes, visit the official [react-router-dom](https://reactrouter.com/docs/en/v6/getting-started/overview) documentation
+
+## ReactRouterContext
+
+### Properties
+
+- routes:
+- defaultRule:
+- browserRouterProps:
+
+## Hooks
+
+### useRoutes
+
+### useRoutesRule
