@@ -2,7 +2,7 @@
 
 A React router wrapper based on React Context API
 
-## Instalation
+## Installation
 
 ```shell
 $ npm install react-router-context
@@ -12,7 +12,7 @@ Or
 $ yarn add react-router-context
 ```
 
-## Usage
+## How to use
 
 ```ts
 import { ReactRouterContext } from 'react-router-context';
