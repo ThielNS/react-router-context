@@ -1,3 +1,43 @@
-#React Router Context
+# React Router Context
 
 A React router wrapper based on React Context API
+
+## Instalation
+
+```shell
+$ npm install react-router-context
+```
+Or
+```shell
+$ yarn add react-router-context
+```
+
+## Usage
+
+```ts
+import { ReactRouterContext } from 'react-router-context';
+import { HomePage, UsersPage, UserDetailPage } from '@pages';
+
+function App(){
+  return (
+    <ReactRouterContext
+      defaultRule="user"
+      routes={[
+        { path: '/', element: <HomePage />, params: { title: 'Home'} }
+        {
+          path: 'users',
+          rules: ['admin']
+          element: <UsersPage />,
+          children: [
+            { path: ':userId', element: <UserDetailPage /> }
+          ]
+        }
+      ]}
+    />
+  )
+}
+
+export default App;
+```
+
+For more information about routes, visit the official [react-router-dom](https://reactrouter.com/docs/en/v6/getting-started/overview) documentation
