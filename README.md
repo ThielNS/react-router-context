@@ -40,6 +40,19 @@ function App(){
 export default App;
 ```
 
+Route typing:
+
+```ts
+type Route = {
+  path?: string;
+  index?: boolean;
+  element?: ReactElement;
+  roles?: string[];
+  params?: any;
+  children?: Route[];
+}
+```
+
 For more information about routes, visit the official [react-router-dom](https://reactrouter.com/docs/en/v6/getting-started/overview) documentation
 
 ## ReactRouterContext
@@ -47,8 +60,8 @@ For more information about routes, visit the official [react-router-dom](https:/
 ### Properties
 
 - <b>routes</b>: Property that receives the list of route objects that will be mapped for navigation.
-- <b>defaultRole</b>: Property used to inform the default role, for route access validation.
-- <b>browserRouterConfig</b>: Property used to override `BrowserRouter` component parameters.
+- <b>defaultRole (Optional)</b>: Property used to inform the default role, for route access validation.
+- <b>browserRouterConfig (Optional)</b>: Property used to override `BrowserRouter` component parameters.
 
 ## Hooks
 
