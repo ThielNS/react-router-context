@@ -46,9 +46,9 @@ For more information about routes, visit the official [react-router-dom](https:/
 
 ### Properties
 
-- routes:
-- defaultRole:
-- browserRouterConfig:
+- <b>routes</b>: Property that receives the list of route objects that will be mapped for navigation.
+- <b>defaultRole</b>: Property used to inform the default role, for route access validation.
+- <b>browserRouterConfig</b>: Property used to override `BrowserRouter` component parameters.
 
 ## Hooks
 
