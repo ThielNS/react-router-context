@@ -21,7 +21,7 @@ import { HomePage, UsersPage, UserDetailPage } from '@pages';
 function App(){
   return (
     <ReactRouterContext
-      defaultRole="user"
+      defaultRole="viewer"
       routes={[
         { path: '/', element: <HomePage />, params: { title: 'Home'} }
         {
@@ -87,3 +87,28 @@ export default HomePage;
 ### useRouteRole()
 
 This hook is used to set the role of the current client, it helps in creating rules for page access permissions.
+
+```ts
+// LoginPage.tsx
+import { useRouteRole } from 'react-router-context';
+
+...
+
+const [role, setRole] = useRouteRole();
+
+async function singIn(values: FormValues) {
+  await authService.access(values)
+    .then((response) => {
+      setRole(response.user.role);
+      navigate('/panel');
+    })
+    .catch(() => {
+      setRole('viewer');
+      navigate('/')
+    });
+}
+
+...
+
+```
+
