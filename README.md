@@ -54,4 +54,36 @@ For more information about routes, visit the official [react-router-dom](https:/
 
 ### useRoutes()
 
+This hook is used to access the list of routes from any functional component, which is linked to the component `ReactRouterContext`
+
+```ts
+// HomePage.tsx
+import { useRoutes } from 'react-router-context';
+import { Link } from 'react-router-dom';
+
+function HomePage() {
+  const routes = useRoutes<{ title: string }>();
+
+  return (
+    <div>
+      <ul>
+        {routes
+          .filter((item) => !!item.params)
+          .map((item, i) => (
+            <li Key={String(i)}>
+              <Link to={item.path}>
+                {item.params.title}
+              </Link>
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+}
+
+export default HomePage;
+```
+
 ### useRouteRole()
+
+This hook is used to set the role of the current client, it helps in creating rules for page access permissions.
