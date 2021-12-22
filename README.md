@@ -21,12 +21,12 @@ import { HomePage, UsersPage, UserDetailPage } from '@pages';
 function App(){
   return (
     <ReactRouterContext
-      defaultRule="user"
+      defaultRole="user"
       routes={[
         { path: '/', element: <HomePage />, params: { title: 'Home'} }
         {
           path: 'users',
-          rules: ['admin']
+          roles: ['admin']
           element: <UsersPage />,
           children: [
             { path: ':userId', element: <UserDetailPage /> }
@@ -47,11 +47,11 @@ For more information about routes, visit the official [react-router-dom](https:/
 ### Properties
 
 - routes:
-- defaultRule:
-- browserRouterProps:
+- defaultRole:
+- browserRouterConfig:
 
 ## Hooks
 
-### useRoutes
+### useRoutes()
 
-### useRoutesRule
+### useRouteRole()
