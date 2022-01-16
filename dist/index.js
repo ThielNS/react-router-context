@@ -131,8 +131,43 @@ function useRouteRole() {
 
   return [role, setRole];
 }
-function useRoutes() {
-  return React.useContext(RoutingContext).routes;
+function useRoutes(paths) {
+  var routes = React.useContext(RoutingContext).routes;
+
+  function getRoute(paths, pathRoutes) {
+    if (pathRoutes === void 0) {
+      pathRoutes = routes;
+    }
+
+    var obj = {};
+    paths.forEach(function (path, i) {
+      var isIndex = typeof path === 'number';
+      var r = pathRoutes;
+
+      function forEach(route) {
+        if (route.path === path) {
+          if (i + 1 < paths.length) {
+            obj = getRoute(paths.slice(i, paths.length), route.children);
+          } else {
+            obj = route;
+          }
+        }
+      }
+
+      if (isIndex) {
+        if (i + 1 < paths.length) {
+          obj = getRoute(paths.slice(i, paths.length), r[path].children);
+        } else {
+          obj = r[path];
+        }
+      } else {
+        pathRoutes.forEach(forEach);
+      }
+    });
+    return obj;
+  }
+
+  return !!paths ? [getRoute(paths)] : routes;
 }
 
 exports.ReactRouterContext = RoutingProvider;
