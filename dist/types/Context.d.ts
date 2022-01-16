@@ -1,7 +1,7 @@
 import { BrowserRouterProps } from 'react-router-dom';
 import { RouteProps } from './Routing';
-export interface RoutingProviderProps {
-    routes: RouteProps[];
+export interface RoutingProviderProps<P = {}> {
+    routes: RouteProps<P>[];
     browserRouterConfig?: BrowserRouterProps;
     defaultRole?: string;
 }

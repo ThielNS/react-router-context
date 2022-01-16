@@ -10,7 +10,7 @@ function RoutingProvider<P = {}>({
   browserRouterConfig,
   routes: defaultPropRoutes,
   defaultRole,
-}: RoutingProviderProps) {
+}: RoutingProviderProps<P>) {
   const [defaultRoutes, setDefaultRoutes] = useState<RouteProps<P>[]>(
     defaultPropRoutes ?? []
   );
@@ -98,22 +98,11 @@ export function useRouteRole(): [string | undefined, (role: string) => void] {
 export function useRoutes<P = any>(paths?: RoutePaths): RouteProps<P>[] {
   const { routes } = useContext(RoutingContext);
 
-  function getRoute(paths: RoutePaths, pathRoutes = routes) {
+  function getRoute(paths: RoutePaths, r = routes) {
     let obj = {} as RouteProps<P>;
 
     paths.forEach((path, i) => {
       const isIndex = typeof path === 'number';
-      let r = pathRoutes;
-
-      function forEach(route: RouteProps) {
-        if (route.path === path) {
-          if (i + 1 < paths.length) {
-            obj = getRoute(paths.slice(i, paths.length), route.children);
-          } else {
-            obj = route;
-          }
-        }
-      }
 
       if (isIndex) {
         if (i + 1 < paths.length) {
@@ -122,14 +111,26 @@ export function useRoutes<P = any>(paths?: RoutePaths): RouteProps<P>[] {
           obj = r[path];
         }
       } else {
-        pathRoutes.forEach(forEach);
+        r.forEach((route: RouteProps) => {
+          if (route.path === path) {
+            if (i + 1 < paths.length) {
+              obj = getRoute(paths.slice(i, paths.length), route.children);
+            } else {
+              obj = route;
+            }
+          }
+        });
       }
     });
 
     return obj;
   }
 
-  return !!paths ? [getRoute(paths)] : routes;
+  if (!!paths && paths.length) {
+    return [getRoute(paths, routes)];
+  }
+
+  return routes;
 }
 
 export default RoutingProvider;
