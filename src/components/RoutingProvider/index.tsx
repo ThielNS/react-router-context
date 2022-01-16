@@ -95,31 +95,27 @@ export function useRouteRole(): [string | undefined, (role: string) => void] {
   return [role, setRole];
 }
 
-export function useRoutes<P = any>(paths?: RoutePaths): RouteProps<P>[] {
+export function useRoutes<P = any>(
+  paths?: RoutePaths
+): Array<RouteProps<P> | undefined> {
   const { routes } = useContext(RoutingContext);
 
-  function getRoute(paths: RoutePaths, r = routes) {
-    let obj = {} as RouteProps<P>;
+  function getRoute(paths: Array<string | number>) {
+    let obj: RouteProps | undefined;
 
-    paths.forEach((path, i) => {
-      const isIndex = typeof path === 'number';
-
-      if (isIndex) {
-        if (i + 1 < paths.length) {
-          obj = getRoute(paths.slice(i, paths.length), r[path].children);
-        } else {
-          obj = r[path];
+    paths.forEach((path) => {
+      if (typeof path === 'number') {
+        if (obj && obj.children) {
+          obj = obj.children[path];
+        } else if (routes[path]) {
+          obj = routes[path];
         }
       } else {
-        r.forEach((route: RouteProps) => {
-          if (route.path === path) {
-            if (i + 1 < paths.length) {
-              obj = getRoute(paths.slice(i, paths.length), route.children);
-            } else {
-              obj = route;
-            }
-          }
-        });
+        if (obj && obj.children) {
+          obj = obj.children.find((route) => route.path === path);
+        } else {
+          obj = routes.find((route) => route.path === path);
+        }
       }
     });
 
@@ -127,7 +123,7 @@ export function useRoutes<P = any>(paths?: RoutePaths): RouteProps<P>[] {
   }
 
   if (!!paths && paths.length) {
-    return [getRoute(paths, routes)];
+    return [getRoute(paths)];
   }
 
   return routes;

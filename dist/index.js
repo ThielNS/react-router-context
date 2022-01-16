@@ -134,38 +134,32 @@ function useRouteRole() {
 function useRoutes(paths) {
   var routes = React.useContext(RoutingContext).routes;
 
-  function getRoute(paths, r) {
-    if (r === void 0) {
-      r = routes;
-    }
-
-    var obj = {};
-    paths.forEach(function (path, i) {
-      var isIndex = typeof path === 'number';
-
-      if (isIndex) {
-        if (i + 1 < paths.length) {
-          obj = getRoute(paths.slice(i, paths.length), r[path].children);
-        } else {
-          obj = r[path];
+  function getRoute(paths) {
+    var obj;
+    paths.forEach(function (path) {
+      if (typeof path === 'number') {
+        if (obj && obj.children) {
+          obj = obj.children[path];
+        } else if (routes[path]) {
+          obj = routes[path];
         }
       } else {
-        r.forEach(function (route) {
-          if (route.path === path) {
-            if (i + 1 < paths.length) {
-              obj = getRoute(paths.slice(i, paths.length), route.children);
-            } else {
-              obj = route;
-            }
-          }
-        });
+        if (obj && obj.children) {
+          obj = obj.children.find(function (route) {
+            return route.path === path;
+          });
+        } else {
+          obj = routes.find(function (route) {
+            return route.path === path;
+          });
+        }
       }
     });
     return obj;
   }
 
   if (!!paths && paths.length) {
-    return [getRoute(paths, routes)];
+    return [getRoute(paths)];
   }
 
   return routes;
