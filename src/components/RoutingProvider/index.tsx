@@ -6,12 +6,12 @@ import { ROUTE_ROLE_STORAGE } from '../../utils/constants';
 
 const RoutingContext = createContext({} as RoutingContextProps);
 
-function RoutingProvider({
+function RoutingProvider<P = {}>({
   browserRouterConfig,
   routes: defaultPropRoutes,
   defaultRole,
 }: RoutingProviderProps) {
-  const [defaultRoutes, setDefaultRoutes] = useState<RouteProps[]>(
+  const [defaultRoutes, setDefaultRoutes] = useState<RouteProps<P>[]>(
     defaultPropRoutes ?? []
   );
   const [role, setRole] = useState<string | undefined>(
@@ -36,7 +36,7 @@ function RoutingProvider({
    * @param routes Array of the Route object
    * @returns JSX.Element | undefined
    */
-  function renderRoutes(routes?: RouteProps[], parentKey?: string) {
+  function renderRoutes(routes?: RouteProps<P>[], parentKey?: string) {
     const ifParentKey = parentKey ? `${parentKey}-` : '';
 
     if (routes && routes.length) {
@@ -59,7 +59,7 @@ function RoutingProvider({
     roles,
     key,
     ...routeProps
-  }: RouteProps & { key: string }) {
+  }: RouteProps<P> & { key: string }) {
     if (role && roles && roles.length) {
       if (roles.includes(role)) {
         return <Route key={key} {...routeProps} />;
