@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RoutingProviderProps, RoutingContextProps } from '../../types/Context';
-import { RouteProps } from '../../types/Routing';
+import { RoutePaths, RouteProps } from '../../types/Routing';
 import { ROUTE_ROLE_STORAGE } from '../../utils/constants';
 
 const RoutingContext = createContext({} as RoutingContextProps);
@@ -95,8 +95,41 @@ export function useRouteRole(): [string | undefined, (role: string) => void] {
   return [role, setRole];
 }
 
-export function useRoutes<P = any>(): RouteProps<P>[] {
-  return useContext(RoutingContext).routes;
+export function useRoutes<P = any>(paths?: RoutePaths): RouteProps<P>[] {
+  const { routes } = useContext(RoutingContext);
+
+  function getRoute(paths: RoutePaths, pathRoutes = routes) {
+    let obj = {} as RouteProps<P>;
+
+    paths.forEach((path, i) => {
+      const isIndex = typeof path === 'number';
+      let r = pathRoutes;
+
+      function forEach(route: RouteProps) {
+        if (route.path === path) {
+          if (i + 1 < paths.length) {
+            obj = getRoute(paths.slice(i, paths.length), route.children);
+          } else {
+            obj = route;
+          }
+        }
+      }
+
+      if (isIndex) {
+        if (i + 1 < paths.length) {
+          obj = getRoute(paths.slice(i, paths.length), r[path].children);
+        } else {
+          obj = r[path];
+        }
+      } else {
+        pathRoutes.forEach(forEach);
+      }
+    });
+
+    return obj;
+  }
+
+  return !!paths ? [getRoute(paths)] : routes;
 }
 
 export default RoutingProvider;

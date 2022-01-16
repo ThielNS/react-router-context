@@ -7,3 +7,5 @@ export interface RouteProps<P = any> extends RouteObj {
 }
 
 export type RoutesProps = { routes?: RouteProps[] };
+
+export type RoutePaths = Array<string | number>;
