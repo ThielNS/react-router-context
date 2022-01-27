@@ -7,7 +7,9 @@ A React router wrapper based on React Context API
 ```shell
 $ npm install react-router-context
 ```
+
 Or
+
 ```shell
 $ yarn add react-router-context
 ```
@@ -50,7 +52,7 @@ type Route = {
   roles?: string[];
   params?: any;
   children?: Route[];
-}
+};
 ```
 
 For more information about routes, visit the official [react-router-dom](https://reactrouter.com/docs/en/v6/getting-started/overview) documentation
@@ -74,8 +76,10 @@ This hook is used to access the list of routes from any functional component, wh
 import { useRoutes } from 'react-router-context';
 import { Link } from 'react-router-dom';
 
+type RouteParams = { title: string };
+
 function HomePage() {
-  const routes = useRoutes<{ title: string }>();
+  const routes = useRoutes<RouteParams>();
 
   return (
     <div>
@@ -84,9 +88,7 @@ function HomePage() {
           .filter((item) => !!item.params)
           .map((item, i) => (
             <li Key={String(i)}>
-              <Link to={item.path}>
-                {item.params.title}
-              </Link>
+              <Link to={item.path}>{item.params.title}</Link>
             </li>
           ))}
       </ul>
@@ -95,6 +97,23 @@ function HomePage() {
 }
 
 export default HomePage;
+```
+
+Or you can specify which route object you want to return from the routing tree, passing an array of paths as a property of `useRoutes`
+
+```ts
+// HomePage.tsx
+
+...
+
+  /**
+  * Passing a paths filter it is possible to
+  * return the tree of a specific route
+  */
+  const userRoutes = useRoutes<RouteParams>(['users']);
+
+...
+
 ```
 
 ### useRouteRole()
@@ -124,4 +143,3 @@ async function singIn(values: FormValues) {
 ...
 
 ```
-
