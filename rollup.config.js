@@ -11,7 +11,7 @@ const EXTENSIONS = ['.ts', '.tsx'];
 const EXTERNAL = Object.keys(pkg.peerDependencies);
 
 export default {
-  input: 'src/index.tsx',
+  input: 'src/index.ts',
   output: {
     file: pkg.main,
     format: 'cjs',
