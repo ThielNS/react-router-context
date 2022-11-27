@@ -1,9 +1,9 @@
 import { RouteProps as RouteObj } from 'react-router-dom';
-export interface RouteProps<P = any> extends RouteObj {
+export declare type RouteProps<P = any> = RouteObj & {
     children?: RouteProps<P>[];
     roles?: string[];
     params?: P;
-}
+};
 export declare type RoutesProps = {
     routes?: RouteProps[];
 };

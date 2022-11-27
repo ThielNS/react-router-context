@@ -1,13 +1,14 @@
 {
   "name": "react-router-context",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A React router wrapper based on React Context API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Thiel",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && tsc --emitDeclarationOnly && rollup -c"
+    "build": "rimraf dist && tsc --emitDeclarationOnly && rollup -c",
+    "npm:publish": "yarn build && npm publish"
   },
   "dependencies": {
     "react-router-dom": "^6.0.2"
